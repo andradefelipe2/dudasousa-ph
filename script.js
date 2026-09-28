@@ -1,3 +1,4 @@
+// Elementos da Interface
 const eventsContainer = document.getElementById('events-container');
 const galleryContainer = document.getElementById('gallery-container');
 const currentEventTitle = document.getElementById('current-event-title');
@@ -7,10 +8,57 @@ const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const lightboxClose = document.getElementById('lightbox-close');
 
-let eventosData = [];
+// Botões de Tema e Idioma
+const themeToggle = document.getElementById('theme-toggle');
+const langToggle = document.getElementById('lang-toggle');
 
-// 1. Inicializa o site carregando as configurações dos eventos
+let eventosData = [];
+let currentLang = localStorage.getItem('site_lang') || 'pt';
+
+// --- 1. LÓGICA DE TEMA (SOL / LUA) ---
+function initTheme() {
+  const savedTheme = localStorage.getItem('site_theme');
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-mode');
+    themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+  } else {
+    themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+  }
+}
+
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('light-mode');
+  const isLight = document.body.classList.contains('light-mode');
+  
+  themeToggle.innerHTML = isLight 
+    ? '<i class="fa-solid fa-sun"></i>' 
+    : '<i class="fa-solid fa-moon"></i>';
+    
+  localStorage.setItem('site_theme', isLight ? 'light' : 'dark');
+});
+
+// --- 2. LÓGICA DE IDIOMA (PT / EN) ---
+function updateLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('site_lang', lang);
+  langToggle.textContent = lang === 'pt' ? 'EN' : 'PT';
+
+  // Atualiza todos os elementos estáticos que possuem atributos data-pt e data-en
+  document.querySelectorAll('[data-pt]').forEach(el => {
+    el.textContent = el.getAttribute(`data-${lang}`);
+  });
+}
+
+langToggle.addEventListener('click', () => {
+  const nextLang = currentLang === 'pt' ? 'en' : 'pt';
+  updateLanguage(nextLang);
+});
+
+// --- 3. LÓGICA DA GALERIA ---
 async function init() {
+  initTheme();
+  updateLanguage(currentLang);
+
   try {
     const res = await fetch('eventos.json');
     eventosData = await res.json();
@@ -22,11 +70,10 @@ async function init() {
     }
   } catch (error) {
     console.error('Erro ao carregar lista de eventos:', error);
-    currentEventTitle.textContent = 'Erro ao carregar projetos.';
+    currentEventTitle.textContent = currentLang === 'pt' ? 'Erro ao carregar projetos.' : 'Error loading projects.';
   }
 }
 
-// 2. Renderiza a barra horizontal de eventos
 function renderEventsScroll() {
   eventsContainer.innerHTML = '';
 
@@ -53,26 +100,23 @@ function renderEventsScroll() {
   });
 }
 
-// 3. Busca e exibe as fotos da pasta do Google Drive via Serverless Function
 async function selectEvent(evento) {
   currentEventTitle.textContent = evento.titulo;
   galleryContainer.innerHTML = '';
   loadingSpinner.style.display = 'block';
 
   try {
-    // Chamada à API Serverless da Vercel
     const response = await fetch(`/api/galeria?folderId=${evento.driveFolderId}`);
     const data = await response.json();
 
     loadingSpinner.style.display = 'none';
 
     if (!data.files || data.files.length === 0) {
-      galleryContainer.innerHTML = '<p style="color: var(--text-secondary);">Nenhuma foto encontrada para este projeto.</p>';
+      galleryContainer.innerHTML = `<p style="color: var(--text-secondary);">${currentLang === 'pt' ? 'Nenhuma foto encontrada.' : 'No photos found.'}</p>`;
       return;
     }
 
     data.files.forEach(file => {
-      // Link direto do renderizador de imagens do Google Drive
       const imgUrl = `https://lh3.googleusercontent.com/d/${file.id}`;
 
       const item = document.createElement('div');
@@ -86,11 +130,11 @@ async function selectEvent(evento) {
   } catch (error) {
     loadingSpinner.style.display = 'none';
     console.error('Erro ao carregar fotos do Drive:', error);
-    galleryContainer.innerHTML = '<p style="color: var(--text-secondary);">Não foi possível carregar as fotos deste projeto no momento.</p>';
+    galleryContainer.innerHTML = `<p style="color: var(--text-secondary);">${currentLang === 'pt' ? 'Erro ao carregar fotos.' : 'Error loading photos.'}</p>`;
   }
 }
 
-// 4. Modal / Lightbox
+// Lightbox
 function openLightbox(url) {
   lightboxImg.src = url;
   lightbox.classList.add('active');
