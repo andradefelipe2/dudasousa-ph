@@ -1,12 +1,25 @@
 :root {
+  /* Tema Escuro (Padrão) */
   --bg-color: #0f0f10;
   --card-bg: #18181b;
   --text-primary: #f4f4f5;
   --text-secondary: #a1a1aa;
   --accent: #d4af37; /* Dourado / Champagne */
   --border-color: #27272a;
+  --btn-hover-bg: rgba(255, 255, 255, 0.05);
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Montserrat', sans-serif;
+}
+
+/* Modo Claro */
+body.light-mode {
+  --bg-color: #fcfcfc;
+  --card-bg: #f4f4f5;
+  --text-primary: #18181b;
+  --text-secondary: #71717a;
+  --accent: #b89628;
+  --border-color: #e4e4e7;
+  --btn-hover-bg: rgba(0, 0, 0, 0.05);
 }
 
 * {
@@ -20,13 +33,45 @@ body {
   color: var(--text-primary);
   font-family: var(--font-body);
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* === Header / Perfil === */
+/* === Header & Top Controls === */
 .profile-header {
+  position: relative;
   border-bottom: 1px solid var(--border-color);
-  padding: 40px 20px;
-  background: linear-gradient(180deg, #141416 0%, var(--bg-color) 100%);
+  padding: 20px 20px 40px 20px;
+  background: linear-gradient(180deg, var(--card-bg) 0%, var(--bg-color) 100%);
+}
+
+.top-controls {
+  max-width: 900px;
+  margin: 0 auto 20px auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-btn, .lang-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.icon-btn:hover, .lang-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: var(--btn-hover-bg);
 }
 
 .profile-container {
@@ -41,7 +86,6 @@ body {
   flex-shrink: 0;
 }
 
-/* Fixação rigorosa de tamanho para evitar a imagem gigante */
 .avatar-img {
   width: 130px !important;
   height: 130px !important;
@@ -71,7 +115,7 @@ body {
   margin-top: 2px;
 }
 
-/* === Botões Elegantes e Minimalistas === */
+/* === Botões Minimalistas === */
 .actions {
   margin-top: 20px;
   display: flex;
@@ -102,7 +146,7 @@ body {
 
 .btn-primary:hover {
   background-color: var(--accent);
-  color: #000;
+  color: #fff;
   transform: translateY(-2px);
 }
 
@@ -115,25 +159,23 @@ body {
 .btn-secondary:hover {
   color: var(--text-primary);
   border-color: var(--text-secondary);
-  background-color: rgba(255, 255, 255, 0.03);
+  background-color: var(--btn-hover-bg);
   transform: translateY(-2px);
 }
 
-/* === Botão Flutuante do WhatsApp (Efeito Vidro) === */
+/* === Botão Flutuante do WhatsApp === */
 .whatsapp-float {
   position: fixed;
   width: 52px;
   height: 52px;
   bottom: 30px;
   right: 30px;
-  background: rgba(24, 24, 27, 0.75);
+  background: var(--card-bg);
   color: var(--text-primary);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--border-color);
   border-radius: 50%;
   font-size: 22px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
   z-index: 999;
   display: flex;
   align-items: center;
@@ -144,7 +186,7 @@ body {
 
 .whatsapp-float:hover {
   background: var(--accent);
-  color: #000;
+  color: #fff;
   border-color: var(--accent);
   transform: scale(1.08) translateY(-3px);
 }
@@ -187,13 +229,14 @@ body {
   position: relative;
   cursor: pointer;
   scroll-snap-align: start;
-  border: 2px solid transparent;
+  border: 1px solid var(--border-color);
   transition: transform 0.3s, border-color 0.3s;
   background-color: var(--card-bg);
 }
 
 .event-card:hover {
   transform: translateY(-4px);
+  border-color: var(--accent);
 }
 
 .event-card.active {
@@ -280,7 +323,7 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* === Lightbox / Modal === */
+/* === Lightbox === */
 .lightbox {
   display: none;
   position: fixed;
