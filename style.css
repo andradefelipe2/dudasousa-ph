@@ -3,8 +3,7 @@
   --card-bg: #18181b;
   --text-primary: #f4f4f5;
   --text-secondary: #a1a1aa;
-  --accent: #d4af37; /* Tom dourado elegante */
-  --accent-hover: #b89628;
+  --accent: #d4af37; /* Dourado / Champagne */
   --border-color: #27272a;
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Montserrat', sans-serif;
@@ -21,7 +20,6 @@ body {
   color: var(--text-primary);
   font-family: var(--font-body);
   line-height: 1.6;
-  padding: 0;
 }
 
 /* === Header / Perfil === */
@@ -39,12 +37,20 @@ body {
   gap: 30px;
 }
 
+.avatar-wrapper {
+  flex-shrink: 0;
+}
+
+/* Fixação rigorosa de tamanho para evitar a imagem gigante */
 .avatar-img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: 130px !important;
+  height: 130px !important;
+  max-width: 130px !important;
+  max-height: 130px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
   border: 2px solid var(--accent);
+  display: block;
 }
 
 .profile-info h1 {
@@ -54,35 +60,93 @@ body {
 }
 
 .tagline {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 500;
   color: var(--text-primary);
 }
 
 .subtext, .location {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--text-secondary);
   margin-top: 2px;
 }
 
+/* === Botões Elegantes e Minimalistas === */
 .actions {
-  margin-top: 15px;
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .btn-primary {
-  display: inline-block;
-  background-color: var(--accent);
-  color: #000;
-  font-weight: 600;
-  padding: 8px 20px;
-  border-radius: 20px;
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: background-color 0.3s;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
 }
 
 .btn-primary:hover {
-  background-color: var(--accent-hover);
+  background-color: var(--accent);
+  color: #000;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+  background-color: rgba(255, 255, 255, 0.03);
+  transform: translateY(-2px);
+}
+
+/* === Botão Flutuante do WhatsApp (Efeito Vidro) === */
+.whatsapp-float {
+  position: fixed;
+  width: 52px;
+  height: 52px;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(24, 24, 27, 0.75);
+  color: var(--text-primary);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  font-size: 22px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+  transform: scale(1.08) translateY(-3px);
 }
 
 /* === Main & Scroll Horizontal === */
@@ -110,9 +174,6 @@ body {
 .events-scroll::-webkit-scrollbar {
   height: 6px;
 }
-.events-scroll::-webkit-scrollbar-track {
-  background: var(--bg-color);
-}
 .events-scroll::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 3px;
@@ -128,6 +189,7 @@ body {
   scroll-snap-align: start;
   border: 2px solid transparent;
   transition: transform 0.3s, border-color 0.3s;
+  background-color: var(--card-bg);
 }
 
 .event-card:hover {
@@ -259,12 +321,14 @@ footer {
   margin-top: 60px;
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 600px) {
   .profile-container {
     flex-direction: column;
     text-align: center;
     gap: 15px;
+  }
+  .actions {
+    justify-content: center;
   }
   .profile-info h1 {
     font-size: 1.8rem;
