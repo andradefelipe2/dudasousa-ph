@@ -2,83 +2,362 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Duda Sousa | Fotógrafa de Mulheres e Marcas</title>
-  <link rel="stylesheet" href="style.css">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Duda Sousa · Fotografia</title>
+
+  <!-- Favicon do repositório da Duda -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/andradefelipe2/dudasousa-ph/main/favicon.png">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/andradefelipe2/dudasousa-ph/main/apple-touch-icon.png">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome (Ícones do WhatsApp e Instagram) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- Script para seguir o padrão do dispositivo se não houver preferência salva -->
+  <script>
+    (function(){
+      var theme = localStorage.getItem('duda-theme');
+      if(!theme){
+        theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Variáveis e ajustes para o Modo Claro com tons quentes e elegantes (sem P&B puro) */
+    :root[data-theme="light"] {
+      --bg-color: #f7f6f2; /* Fundo off-white / bege suave */
+      --card-bg: #ffffff;
+      --text-primary: #1c1b18; /* Preto suave / carvão quente */
+      --text-secondary: #5c5952; /* Cinza médio com toque quente */
+      --border-color: #dedbd0; /* Borda em tom linho */
+      --accent: #3a3834;
+    }
+
+    :root[data-theme="light"] .profile-header {
+      background: #fdfcf9 !important;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    :root[data-theme="light"] .profile-info h1 {
+      color: #1c1b18 !important;
+    }
+
+    :root[data-theme="light"] .profile-info .tagline,
+    :root[data-theme="light"] .profile-info .subtext,
+    :root[data-theme="light"] .profile-info .location {
+      color: #5c5952 !important;
+    }
+
+    /* Botões harmonizados com o fundo quente */
+    :root[data-theme="light"] .btn-secondary {
+      color: #1c1b18 !important;
+      border-color: #d0ccc0 !important;
+      background-color: #f0eeea !important;
+    }
+
+    :root[data-theme="light"] .btn-secondary:hover {
+      background-color: #e4e1d8 !important;
+      border-color: #1c1b18 !important;
+    }
+
+    :root[data-theme="light"] .btn-icon-only {
+      color: #1c1b18 !important;
+      border-color: #d0ccc0 !important;
+      background-color: #f0eeea !important;
+    }
+
+    :root[data-theme="light"] .btn-icon-only:hover {
+      background-color: #e4e1d8 !important;
+      border-color: #1c1b18 !important;
+    }
+
+    .top-nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 20px 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lang-btn {
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lang-btn:hover {
+      border-color: var(--text-primary);
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border-color);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+    }
+    .theme-toggle:hover {
+      border-color: var(--text-primary);
+      background: rgba(0, 0, 0, 0.04);
+    }
+    .theme-toggle svg {
+      width: 17px;
+      height: 17px;
+      stroke-width: 2;
+    }
+
+    .theme-toggle .icon-sun,
+    .theme-toggle .icon-moon { display: none; align-items: center; justify-content: center; }
+    :root[data-theme="dark"] .theme-toggle .icon-sun { display: flex; }
+    :root[data-theme="light"] .theme-toggle .icon-moon { display: flex; }
+
+    /* Layout da seção de ações e redes sociais */
+    .actions-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .actions-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Estilo para o botão circular apenas com ícone (Compartilhar) */
+    .btn-icon-only {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 41px;
+      height: 41px;
+      border-radius: 30px;
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-icon-only:hover {
+      color: var(--text-primary);
+      border-color: var(--text-secondary);
+      transform: translateY(-2px);
+    }
+
+    .btn-icon-only svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .empty-gallery {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+      border: 1px dashed var(--border-color);
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+    .empty-gallery svg {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 12px;
+      stroke: var(--text-secondary);
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Cabeçalho / Perfil -->
+  <!-- Controls Nav (Idioma e Tema) -->
+  <div class="top-nav">
+    <button class="lang-btn" id="lang-btn" type="button" aria-label="Alternar idioma">PT-BR</button>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema claro/escuro">
+      <span class="icon-sun"><i data-lucide="sun"></i></span>
+      <span class="icon-moon"><i data-lucide="moon"></i></span>
+    </button>
+  </div>
+
+  <!-- Header / Perfil -->
   <header class="profile-header">
     <div class="profile-container">
       <div class="avatar-wrapper">
-        <img src="https://raw.githubusercontent.com/andradefelipe2/dudasousa-ph/main/logo.jpg" alt="Duda Sousa" class="avatar-img">
+        <img src="logo.jpg" alt="Duda Sousa" class="avatar-img" onerror="this.src='https://raw.githubusercontent.com/andradefelipe2/dudasousa-ph/main/logo.jpg'">
       </div>
       <div class="profile-info">
         <h1>Duda Sousa</h1>
         <p class="tagline">Fotógrafa de mulheres e marcas</p>
         <p class="subtext">Fotos • Vídeos • Mentorias</p>
-        <p class="location">📍 São Paulo | Atendo MG • SP • RJ</p>
-        
-        <div class="actions">
-          <a href="https://wa.me/553496393196" target="_blank" rel="noopener" class="btn-primary">
-            <i class="fa-brands fa-whatsapp"></i> Solicitar Orçamento
-          </a>
-          <a href="https://www.instagram.com/dudasousa.ph/" target="_blank" rel="noopener" class="btn-secondary">
-            <i class="fa-brands fa-instagram"></i> @dudasousa.ph
-          </a>
+        <p class="location">📍 São Paulo &bull; Atendo MG • SP • RJ</p>
+
+        <div class="actions-container">
+          <div class="actions-row">
+            <!-- WhatsApp corrigido: 55 + 34 + 96393196 -->
+            <a href="https://wa.me/553496393196" target="_blank" rel="noopener" class="btn-primary">
+              <i data-lucide="message-circle"></i> Solicitar Orçamento
+            </a>
+            
+            <!-- Botão Instagram com o @dudasousa.ph -->
+            <a href="https://instagram.com/dudasousa.ph" target="_blank" rel="noopener" class="btn-secondary">
+              <i data-lucide="instagram"></i> @dudasousa.ph
+            </a>
+
+            <!-- Botão de Compartilhamento (Apenas o ícone ao lado do Instagram) -->
+            <button type="button" id="share-btn" class="btn-icon-only" aria-label="Compartilhar Perfil">
+              <i data-lucide="share-2"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </header>
 
+  <!-- Conteúdo Principal -->
   <main class="main-content">
-    <!-- Seção de Destaques / Eventos (Scroll Horizontal) -->
-    <section class="events-section">
-      <h2 class="section-title">Projetos & Ensaios</h2>
-      <div class="events-scroll" id="events-container">
-        <!-- Gerado dinamicamente via JS -->
+    
+    <!-- Ensaios (Subpastas do Google Drive) -->
+    <section>
+      <h2 class="section-title">Ensaios & Eventos</h2>
+      <div class="events-scroll" id="events-scroll">
+        <!-- Álbuns da pasta 'site' do Drive serão renderizados dinamicamente via API -->
       </div>
     </section>
 
-    <!-- Seção da Galeria de Fotos -->
-    <section class="gallery-section">
+    <!-- Galeria Principal -->
+    <section class="gallery-section" id="galeria">
       <div class="gallery-header">
-        <h3 id="current-event-title">Selecione um projeto</h3>
+        <h3 id="gallery-title">Galeria</h3>
       </div>
-      <div class="gallery-grid" id="gallery-container">
-        <!-- Fotos do Google Drive inseridas via JS -->
-      </div>
-      <div class="loading-spinner" id="loading-spinner">
-        <div class="spinner"></div>
-        <p>Carregando fotografias...</p>
+
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- Renderizado via JS -->
       </div>
     </section>
+
   </main>
 
-  <!-- Botão Flutuante do WhatsApp -->
-  <a href="https://wa.me/553496393196" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Falar pelo WhatsApp">
-    <i class="fa-brands fa-whatsapp"></i>
+  <!-- Botão Flutuante do WhatsApp (34 9639-3196) -->
+  <a href="https://wa.me/553496393196" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Contato via WhatsApp">
+    <i data-lucide="message-circle"></i>
   </a>
 
-  <!-- Modal / Lightbox -->
+  <!-- Lightbox Modal -->
   <div class="lightbox" id="lightbox">
     <span class="lightbox-close" id="lightbox-close">&times;</span>
-    <img class="lightbox-img" id="lightbox-img" src="" alt="Ampliação da foto">
+    <img class="lightbox-img" id="lightbox-img" src="" alt="Foto expandida">
   </div>
 
   <footer>
     <p>&copy; Duda Sousa Fotografia. Todos os direitos reservados.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Inicializa ícones do Lucide
+    if (window.lucide) { lucide.createIcons(); }
+
+    // Alternância de Tema Claro / Escuro
+    document.getElementById('theme-toggle').addEventListener('click', function(){
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('duda-theme', next); } catch(e) {}
+    });
+
+    // Alternância Visual de Idioma
+    document.getElementById('lang-btn').addEventListener('click', function(){
+      this.textContent = this.textContent === 'PT-BR' ? 'EN-US' : 'PT-BR';
+    });
+
+    // Funcionalidade do Botão de Compartilhamento
+    const shareBtn = document.getElementById('share-btn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', async () => {
+        const shareData = {
+          title: 'Duda Sousa · Fotografia',
+          text: 'Conheça o portfólio de fotografia editorial, eventos e ensaios da Duda Sousa.',
+          url: window.location.href
+        };
+
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+          } catch (err) {
+            // Ignora se o usuário cancelar o compartilhamento
+          }
+        } else {
+          try {
+            await navigator.clipboard.writeText(window.location.href);
+            alert('Link copiado para a área de transferência!');
+          } catch (err) {
+            console.error('Erro ao copiar link:', err);
+          }
+        }
+      });
+    }
+
+    // Estado inicial sem conteúdo até a integração com a API do Google Drive
+    const pastaSiteDrive = [];
+
+    const eventsScroll = document.getElementById('events-scroll');
+    const galleryGrid = document.getElementById('gallery-grid');
+    const galleryTitle = document.getElementById('gallery-title');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    function renderDriveContent() {
+      eventsScroll.innerHTML = '';
+      
+      if (pastaSiteDrive.length === 0) {
+        eventsScroll.style.display = 'none';
+        galleryGrid.innerHTML = `
+          <div class="empty-gallery">
+            <i data-lucide="image"></i>
+            <p>Nenhum ensaio encontrado no momento.<br><small>Sincronizando com a pasta <strong>site</strong> do Google Drive...</small></p>
+          </div>
+        `;
+        if (window.lucide) { lucide.createIcons(); }
+        return;
+      }
+    }
+
+    function abrirLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.classList.add('active');
+    }
+
+    lightboxClose.addEventListener('click', () => lightbox.classList.remove('active'));
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) lightbox.classList.remove('active');
+    });
+
+    // Inicialização
+    renderDriveContent();
+  </script>
 </body>
 </html>
