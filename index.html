@@ -4,33 +4,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Duda Sousa | Fotógrafa de Mulheres e Marcas</title>
+
+  <!-- CSS Principal -->
   <link rel="stylesheet" href="style.css">
-  
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome (Ícones do WhatsApp e Instagram) -->
+
+  <!-- FontAwesome para Ícones -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
   <!-- Cabeçalho / Perfil -->
   <header class="profile-header">
+    <!-- Barra de Utilitários Topo (Tema + Idioma) -->
+    <div class="top-controls">
+      <button id="theme-toggle" class="icon-btn" aria-label="Alternar Tema">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+      <button id="lang-toggle" class="lang-btn" aria-label="Alternar Idioma">
+        EN
+      </button>
+    </div>
+
     <div class="profile-container">
       <div class="avatar-wrapper">
         <img src="https://raw.githubusercontent.com/andradefelipe2/dudasousa-ph/main/logo.jpg" alt="Duda Sousa" class="avatar-img">
       </div>
       <div class="profile-info">
         <h1>Duda Sousa</h1>
-        <p class="tagline">Fotógrafa de mulheres e marcas</p>
-        <p class="subtext">Fotos • Vídeos • Mentorias</p>
-        <p class="location">📍 São Paulo | Atendo MG • SP • RJ</p>
+        <p class="tagline" data-pt="Fotógrafa de mulheres e marcas" data-en="Photographer for women and brands">Fotógrafa de mulheres e marcas</p>
+        <p class="subtext" data-pt="Fotos • Vídeos • Mentorias" data-en="Photos • Videos • Mentorships">Fotos • Vídeos • Mentorias</p>
+        <p class="location" data-pt="📍 São Paulo | Atendo MG • SP • RJ" data-en="📍 São Paulo | Serving MG • SP • RJ">📍 São Paulo | Atendo MG • SP • RJ</p>
         
         <div class="actions">
           <a href="https://wa.me/553496393196" target="_blank" rel="noopener" class="btn-primary">
-            <i class="fa-brands fa-whatsapp"></i> Solicitar Orçamento
+            <i class="fa-brands fa-whatsapp"></i> <span data-pt="Solicitar Orçamento" data-en="Get a Quote">Solicitar Orçamento</span>
           </a>
           <a href="https://www.instagram.com/dudasousa.ph/" target="_blank" rel="noopener" class="btn-secondary">
             <i class="fa-brands fa-instagram"></i> @dudasousa.ph
@@ -43,7 +55,7 @@
   <main class="main-content">
     <!-- Seção de Destaques / Eventos (Scroll Horizontal) -->
     <section class="events-section">
-      <h2 class="section-title">Projetos & Ensaios</h2>
+      <h2 class="section-title" data-pt="Projetos & Ensaios" data-en="Projects & Shoots">Projetos & Ensaios</h2>
       <div class="events-scroll" id="events-container">
         <!-- Gerado dinamicamente via JS -->
       </div>
@@ -52,14 +64,14 @@
     <!-- Seção da Galeria de Fotos -->
     <section class="gallery-section">
       <div class="gallery-header">
-        <h3 id="current-event-title">Selecione um projeto</h3>
+        <h3 id="current-event-title" data-pt="Selecione um projeto" data-en="Select a project">Selecione um projeto</h3>
       </div>
       <div class="gallery-grid" id="gallery-container">
         <!-- Fotos do Google Drive inseridas via JS -->
       </div>
       <div class="loading-spinner" id="loading-spinner">
         <div class="spinner"></div>
-        <p>Carregando fotografias...</p>
+        <p data-pt="Carregando fotografias..." data-en="Loading photos...">Carregando fotografias...</p>
       </div>
     </section>
   </main>
@@ -76,7 +88,7 @@
   </div>
 
   <footer>
-    <p>&copy; Duda Sousa Fotografia. Todos os direitos reservados.</p>
+    <p>&copy; Duda Sousa Fotografia. <span data-pt="Todos os direitos reservados." data-en="All rights reserved.">Todos os direitos reservados.</span></p>
   </footer>
 
   <script src="script.js"></script>
